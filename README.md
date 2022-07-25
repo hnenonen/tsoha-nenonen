@@ -1,6 +1,8 @@
 # tsoha-nenonen
 Tsoha, course exercise, summer 2022
 
+heroku link: https://tsoha-nenonen.herokuapp.com/
+
 This exercise is done using flask with python and postregreSQL.
 
 This application is developed with a working name "voluntary app".
