@@ -1,4 +1,16 @@
 <title>Voluntary app</title>
+Tehtävien määrä: {{ count }}
+<hr>
+{% for task in tasks %}
+<i>Tehtävän nimi:</i> {{ task[0] }}
+<p>
+<i>Tehtävänanto:</i> {{ task[1] }}
+<p>
+<i>Lähettäjä:</i> {{ message[1] }}
+#<p>
+#<i>Aika:</i> {{ message[2].strftime("%Y-%m-%d %H:%M:%S") }}
+<hr>
+{% endfor %}
 
 {% if session.user_id %}
 Olet kirjautunut sisään.

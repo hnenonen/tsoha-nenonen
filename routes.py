@@ -1,10 +1,23 @@
 from app import app
 from flask import render_template, request, redirect
-import users
+import users, tasks
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    list = tasks.get_list()
+    return render_template("index.html", count=len(list), tasks=list)
+
+@app.route("/new")
+def new():
+    return render_template("new.html")
+
+@app.route("/send", methods=["POST"])
+def send():
+    content = request.form["content"]
+    if tasks.send(content):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Viestin lähetys ei onnistunut")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
