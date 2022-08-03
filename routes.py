@@ -13,8 +13,9 @@ def new():
 
 @app.route("/send", methods=["POST"])
 def send():
+    taskname = request.form["taskname"]
     content = request.form["content"]
-    if tasks.send(content):
+    if tasks.send(taskname, content):
         return redirect("/")
     else:
         return render_template("error.html", message="Viestin lähetys ei onnistunut")

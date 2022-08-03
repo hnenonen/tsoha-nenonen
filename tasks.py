@@ -6,11 +6,11 @@ def get_list():
     result = db.session.execute(sql)
     return result.fetchall()
 
-def send(content):
+def send(taskname, content):
     user_id = users.user_id()
     if user_id == 0:
         return False
-    sql = "INSERT INTO tasks (taskname, content, user_id) VALUES (:taskname, :content, :user_id"
-    db.session.execute(sql, {"taksname":taskname, "content":content, "user_id":user_id})
+    sql = "INSERT INTO tasks (taskname, content, user_id) VALUES (:taskname, :content, :user_id)"
+    db.session.execute(sql, {"taskname":taskname, "content":content, "user_id":user_id})
     db.session.commit()
     return True
