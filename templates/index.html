@@ -1,3 +1,8 @@
 <title>Voluntary app</title>
-<h1>Welcome to the index</h1>
-<b>Login will be handled here</b> <i>and registering</i>!
+
+{% if session.user_id %}
+Olet kirjautunut sisään.
+<a href="/new">Lähetä viesti</a> | <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
