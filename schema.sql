@@ -9,5 +9,5 @@ CREATE TABLE tasks (
     taskname TEXT,
     content TEXT,
     task_state TEXT,
-    user_id INTEGER REFERENCE users
+    user_id INTEGER REFERENCES users
 );
