@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect
-import users, tasks
+import users, tasks, comments
 
 @app.route("/")
 def index():
@@ -16,6 +16,14 @@ def send():
     taskname = request.form["taskname"]
     content = request.form["content"]
     if tasks.send(taskname, content):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Tehtävän lähetys ei onnistunut")
+
+@app.route("/comment", methods=["POST"])
+def comment():
+    comment = request.form["comment"]
+    if comments.send(comment):
         return redirect("/")
     else:
         return render_template("error.html", message="Viestin lähetys ei onnistunut")

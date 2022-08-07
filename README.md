@@ -1,7 +1,18 @@
 # tsoha-nenonen
 Tsoha, course exercise, summer 2022
 
-heroku link: https://tsoha-nenonen.herokuapp.com/
+heroku link: https://voluntee-app.herokuapp.com/
+
+
+STATUS 
+-- 7.8.2022
+ - It is possible to make an account 
+ - You can login with the account
+ - You can make a new task
+ 
+In progress: commenting on each task
+
+-------------------------------------------------------------------
 
 This exercise is done using flask with python and postregreSQL.
 

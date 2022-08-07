@@ -11,3 +11,10 @@ CREATE TABLE tasks (
     task_state TEXT,
     user_id INTEGER REFERENCES users
 );
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    task_id INTEGER REFERENCES tasks,
+    comment TEXT,
+    user_id INTEGER REFERENCES users
+);
