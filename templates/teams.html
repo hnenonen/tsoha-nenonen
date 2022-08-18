@@ -1,0 +1,18 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+
+{% for team in teams %}
+<hr>
+<a href="/jointeam/{{team.id}}"><i>{{team.teamname}}</i> 
+<i>{{ team.id }}
+</hr>
+{% endfor %}
+
+{% endblock %}
+
+
