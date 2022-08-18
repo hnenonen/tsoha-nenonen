@@ -1,0 +1,15 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+
+{% for task in tasks %}
+<hr>
+<a href="/task/{{ task.id }}"><i>Otsikko:</i> {{task.taskname}}</a><i>    State:    </i> {{task.task_state}}
+</hr>
+{% endfor %}
+
+{% endblock %}
