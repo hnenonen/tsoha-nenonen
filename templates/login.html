@@ -1,3 +1,15 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+
+{% if session.user_id %}
+Olet kirjautunut sisään.
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
 <form action="/login" method="post">
 Tunnus: <input type="text" name="username">
 <p>
@@ -6,3 +18,8 @@ Salasana: <input type="password" name="password">
 <input type="submit" value="Kirjaudu">
 </form>
 Jos sinulla ei ole tunnusta, voit luoda uuden tunnuksen <a href="/register">tästä</a>
+{% endif %}
+
+<p>
+Voit luoda uuden ryhmän <a href="/newteam"> tästä</a>
+{% endblock %}

@@ -1,20 +1,33 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+
 <title>Voluntary app</title>
-Tehtävien määrä: {{ count }}
+Tehtävien määrä: {{ count }} 
 <hr>
 {% for task in tasks %}
-<i>Otsikko:</i> {{ task[0] }}
+<i>Tehtävän id</i> {{ task.id }}
 <p>
-<i>Tehtävänanto</i> {{ task[1] }}
+<a href="/task/{{ task.id }}"><i>Otsikko:</i> {{task.taskname}}</a>
+<!--<i>Otsikko:</i> {{ task.taskname }}-->
 <p>
-<i>Lähettäjä:</i> {{ task[2] }}
+<i>Tehtävä luotu:</i> {{ task.time }}
 <p>
-<form action="/comment" method="post">
-Viesti: <br>
-<textarea name="comment" rows="2" cols="40"></textarea>
-<br>
-<input type="submit" value="Lähetä">
-</form>
-
+<i>Tehtävänanto</i> {{ task.content }}
+<p>
+<i>Lähettäjä:</i> {{ task.username }}
+<p>
+<i>Status:</i> {{ task.task_state }}
+<!--<form action="/comment/{{ task.id }}" method="post">-->
+<!--Kommentoi: <br>-->
+<!--<textarea name="comment" rows="3" cols="40"></textarea>-->
+<!--<br>-->
+<!--<input type="submit" value="Lähetä">-->
+<!--</form>-->
 <hr>
 {% endfor %}
 
@@ -23,4 +36,6 @@ Olet kirjautunut sisään.
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>
-{% endif %}
+{% endif %} 
+
+{% endblock %}
