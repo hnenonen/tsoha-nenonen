@@ -9,7 +9,8 @@ CREATE TABLE tasks (
     taskname TEXT,
     content TEXT,
     task_state TEXT,
-    user_id INTEGER REFERENCES users
+    user_id INTEGER REFERENCES users,
+    time TIMESTAMP
 );
 
 CREATE TABLE comments (
@@ -17,4 +18,16 @@ CREATE TABLE comments (
     task_id INTEGER REFERENCES tasks,
     comment TEXT,
     user_id INTEGER REFERENCES users
+);
+
+CREATE TABLE teams (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
+    team_id INTEGER REFERENCES team_info
+);
+
+CREATE TABLE team_info (
+    id SERIAL PRIMARY KEY,
+    teamname TEXT UNIQUE,
+    password TEXT
 );
