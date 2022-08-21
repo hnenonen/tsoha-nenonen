@@ -3,8 +3,15 @@ Tsoha, course exercise, summer 2022
 
 heroku link: https://voluntee-app.herokuapp.com/
 
-
 STATUS 
+-- 21.8.2022
+ - You can make a team and others can join it with correct password
+ - You can leave comments into tasks
+ - using css and bootstrap
+ 
+ In progress: profile pages and messages between two users, searches
+ DB sketch: ![](./static/database_sketch.png)
+
 -- 7.8.2022
  - It is possible to make an account 
  - You can login with the account
