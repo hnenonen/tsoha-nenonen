@@ -111,3 +111,7 @@ def jointeam(id):
         return redirect("/")
     else:
         return render_template("error.html", message="Tiimin liittyminen ei onnistunut")
+
+@app.route("/profile")
+def pfofile():
+    return render_template("profile.html")
