@@ -9,7 +9,11 @@ STATUS
  - You can leave comments into tasks
  - using css and bootstrap
  
- In progress: profile pages and messages between two users, searches
+ In progress: 
+ - profile pages 
+ - messages between two users
+ - searches to bring more stats
+ - currently mytasks is broken
  
  
  ![](./static/database_sketch.png)
