@@ -6,6 +6,7 @@ heroku link: https://voluntee-app.herokuapp.com/
 STATUS 
 -- 21.8.2022
  - You can make a team and others can join it with correct password
+ - You can take tasks, and change their status TODO->WORKING->DONE 
  - You can leave comments into tasks
  - using css and bootstrap
  
