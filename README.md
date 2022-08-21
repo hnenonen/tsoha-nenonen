@@ -11,7 +11,8 @@ STATUS
  
  In progress: profile pages and messages between two users, searches
  
- DB sketch: ![](./static/database_sketch.png)
+ DB sketch: 
+ ![](./static/database_sketch.png)
 
 -- 7.8.2022
  - It is possible to make an account 
