@@ -23,14 +23,14 @@ def send(taskname, content):
     return True
 
 def take_task(id):
-    user_id = users.user_id()
-    if user_id == 0:
+    worker_id = users.user_id()
+    if worker_id == 0:
         return False
     if get_state(id) == "TODO":
-        sql = "UPDATE tasks SET task_state='WORKING' WHERE id=:id"
+        sql = "UPDATE tasks SET task_state='WORKING', worker_id=:worker_id WHERE id=:id"
     elif get_state(id) == "WORKING":
-        sql = "UPDATE tasks SET task_state='DONE' WHERE id=:id"
-    result = db.session.execute(sql, {"id": id})
+        sql = "UPDATE tasks SET task_state='DONE', worker_id=:worker_id WHERE id=:id"
+    result = db.session.execute(sql, {"worker_id":worker_id, "id": id})
     db.session.commit()
     return True
 
