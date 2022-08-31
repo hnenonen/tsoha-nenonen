@@ -10,24 +10,12 @@
 Tehtävien määrä: {{ count }} 
 <hr>
 {% for task in tasks %}
-<i>Tehtävän id</i> {{ task.id }}
 <p>
-<a href="/task/{{ task.id }}"><i>Otsikko:</i> {{task.taskname}}</a>
-<!--<i>Otsikko:</i> {{ task.taskname }}-->
+{{ task.time }}<a>    ||    luonut:  </a>{{ task.username }}
 <p>
-<i>Tehtävä luotu:</i> {{ task.time }}
-<p>
-<i>Tehtävänanto</i> {{ task.content }}
-<p>
-<i>Lähettäjä:</i> {{ task.username }}
+<a href="/task/{{ task.id }}"><i>Tehtävä:</i> {{task.taskname}}</a>
 <p>
 <i>Status:</i> {{ task.task_state }}
-<!--<form action="/comment/{{ task.id }}" method="post">-->
-<!--Kommentoi: <br>-->
-<!--<textarea name="comment" rows="3" cols="40"></textarea>-->
-<!--<br>-->
-<!--<input type="submit" value="Lähetä">-->
-<!--</form>-->
 <hr>
 {% endfor %}
 

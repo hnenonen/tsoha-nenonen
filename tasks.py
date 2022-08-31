@@ -7,7 +7,7 @@ def get_task(id):
     return result.fetchone()[0]
 
 def get_list():
-    sql = "SELECT T.id, T.taskname, T.task_state, T.content, T.time, U.username FROM tasks T, users U WHERE T.user_id = U.id ORDER BY T.id"
+    sql = "SELECT T.id, T.taskname, T.task_state, T.content, T.time, U.username FROM tasks T, users U WHERE T.user_id = U.id ORDER BY T.id DESC"
     result = db.session.execute(sql)
     return result.fetchall()
 
