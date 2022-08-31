@@ -44,6 +44,6 @@ def mytasks():
     if worker_id == 0:
         return False
     sql = "SELECT T.id, T.taskname, T.task_state, T.content, U.username FROM tasks T, users U WHERE T.worker_id=:worker_id AND T.worker_id = U.id AND T.task_state = 'WORKING' ORDER BY T.id"
-    result = db.session.execute(sql, {"user_id": user_id})
+    result = db.session.execute(sql, {"worker_id": worker_id})
     return result.fetchall()
 
