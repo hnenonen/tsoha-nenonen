@@ -40,10 +40,10 @@ def get_state(id):
     return result.fetchone()[0]
 
 def mytasks():
-    user_id = users.user_id()
-    if user_id == 0:
+    worker_id = users.user_id()
+    if worker_id == 0:
         return False
-    sql = "SELECT T.id, T.taskname, T.task_state, T.content, U.username FROM tasks T, users U WHERE T.user_id=:user_id AND U.id = 14 AND T.task_state = 'WORKING' ORDER BY T.id"
+    sql = "SELECT T.id, T.taskname, T.task_state, T.content, U.username FROM tasks T, users U WHERE T.worker_id=:worker_id AND T.worker_id = U.id AND T.task_state = 'WORKING' ORDER BY T.id"
     result = db.session.execute(sql, {"user_id": user_id})
     return result.fetchall()
 
