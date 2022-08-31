@@ -22,6 +22,15 @@ def send(taskname, content):
     db.session.commit()
     return True
 
+def update_task(id, taskname, content, task_state):
+    user_id = users.user_id()
+    if user_id == 0:
+        return False
+    sql = "UPDATE tasks SET taskname=:taskname, content=:content, task_state=:task_state, user_id=:user_id, time=NOW() WHERE id=:id"
+    result = db.session.execute(sql, {"taskname":taskname, "content":content, "task_state": task_state, "user_id":user_id, "id":id})
+    db.session.commit()
+    return True
+
 def take_task(id):
     worker_id = users.user_id()
     if worker_id == 0:

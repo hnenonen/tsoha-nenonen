@@ -1,7 +1,7 @@
 from db import db
 from app import app
 from flask import render_template, request, redirect
-import users, tasks, teams_info, comments
+import users, tasks, teams_info, comments, profiles
 
 @app.route("/")
 def index():
@@ -30,7 +30,22 @@ def task(id):
     comment_list = comments.get_list(id)
     return render_template("task.html", id=id, topic=topic, comments=comment_list)
 
-@app.route("/update/<int:id>", methods=["POST"])
+@app.route("/update_task/<int:id>", methods=["POST"])
+def update_task(id):
+    return render_template("update_task.html", id=id) 
+
+@app.route("/send_update_task/<int:id>", methods=["POST"])
+def send_update_task(id):
+    taskname = request.form["taskname"]
+    content = request.form["content"]
+    task_state = request.form["task_state"]
+    if tasks.update_task(id, taskname, content, task_state):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Tehtävän päivitys ei onnistunut")
+
+
+@app.route("/update/<int:id>", methods=["GET", "POST"])
 def update(id):
     if tasks.take_task(id):
         topic = tasks.get_task(id)
@@ -112,6 +127,16 @@ def jointeam(id):
     else:
         return render_template("error.html", message="Tiimin liittyminen ei onnistunut")
 
-@app.route("/profile")
-def pfofile():
-    return render_template("profile.html")
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    if request.method == "GET":
+        return render_template("profile.html")
+    if request.method == "POST":
+        name = request.form["name"]
+        age = request.form["age"]
+        motto = request.form["motto"]
+        content = request.form["content"]
+        if profiles.modify(name, age, motto, content):
+            return redirect("/")
+        else:
+            return render_template("error.html", message="Profiilin päivittäminen ei onnistunut")

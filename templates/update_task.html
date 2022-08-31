@@ -1,0 +1,30 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+
+<form action="/send_update_task/{{ id }}" method="POST">
+Tehtävän nimi: <br>
+<textarea name="taskname" rows="1" cols="40"></textarea>
+<br>
+Tehtävänanto: <br>
+<textarea name="content" rows="3" cols="40"></textarea>
+<br>
+Tehtävän status: <br>
+<input type="radio" name="task_state" value="TODO"> TODO
+<input type="radio" name="task_state" value="WORKING"> WORKING
+<input type="radio" name="task_state" value="DONE"> DONE
+<input type="submit" value="Päivitä">
+</form>
+<p>
+<form action="/task/{{ id }}" method="POST">
+<input type="submit" value="Peruuta">
+</form>
+
+{% endblock %}
+
+
