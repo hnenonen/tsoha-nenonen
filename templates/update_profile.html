@@ -7,17 +7,7 @@
 {% block content %}
 
 
-<form action="/register" method="post">
-Tunnus: <input type="text" name="username">
-<p>
-Salasana: <input type="password" name="password1">
-<p>
-Salasana uudestaan: <input type="password" name="password2">
-<p>
-<input type="radio" name="admin" value="0"> User 
-<input type="radio" name="admin" value="1"> Admin
-<p>
-<p>
+<form action="/send_update_profile/{{ id }}" method="post">
 Nimi: <input type="text" name="name">
 <p>
 Ikä: <input type="text" name="age">
@@ -26,7 +16,12 @@ Motto: <input type="text" name="motto">
 <p>
 Sisältöä: <input type="text" name="content">
 <p>
-<input type="submit" value="Luo tunnus">
+<input type="submit" value="Päivitä profiili">
+</form>
+<p>
+<form action="/profile/{{ id }}" method="POST">
+<input type="submit" value="Peruuta">
 </form>
 
 {% endblock %}
+
