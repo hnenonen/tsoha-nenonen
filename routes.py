@@ -6,7 +6,8 @@ import users, tasks, teams_info, comments, profiles
 @app.route("/")
 def index():
     task_list = tasks.get_list()
-    return render_template("index.html", count=len(task_list), tasks=task_list)
+    user_id = users.user_id()
+    return render_template("index.html", count=len(task_list), tasks=task_list, user_id=user_id)
 
 @app.route("/comment/<int:id>", methods=["POST"])
 def comment(id):
@@ -27,8 +28,15 @@ def mytasks():
 @app.route("/task/<int:id>", methods=["GET", "POST"])
 def task(id):
     topic = tasks.get_task(id)
+    status = tasks.get_status(id)
     comment_list = comments.get_list(id)
-    return render_template("task.html", id=id, topic=topic, comments=comment_list)
+    work_time = tasks.get_worktime(id)
+    message = ""
+    if status == "TODO":
+        message = "Take_task"
+    if status == "WORKING":
+        message = "Mark_done"
+    return render_template("task.html", id=id, topic=topic, status=status, message=message, comments=comment_list, work_time=work_time)
 
 @app.route("/update_task/<int:id>", methods=["POST"])
 def update_task(id):
@@ -39,7 +47,8 @@ def send_update_task(id):
     taskname = request.form["taskname"]
     content = request.form["content"]
     task_state = request.form["task_state"]
-    if tasks.update_task(id, taskname, content, task_state):
+    work_time = request.form["work_time"]
+    if tasks.update_task(id, taskname, content, task_state, work_time):
         return redirect("/")
     else:
         return render_template("error.html", message="Tehtävän päivitys ei onnistunut")
@@ -49,8 +58,15 @@ def send_update_task(id):
 def update(id):
     if tasks.take_task(id):
         topic = tasks.get_task(id)
+        status = tasks.get_status(id)
         comment_list = comments.get_list(id)
-        return render_template("task.html", id=id, topic=topic, comments=comment_list)
+        work_time = tasks.get_worktime(id)
+        message = ""
+        if status == "TODO":
+            message = "Take_task"
+        if status == "WORKING":
+            message = "Mark_done"
+        return render_template("task.html", id=id, topic=topic, status=status, message=message, comments=comment_list, work_time=work_time)
     else:
         return render_template("error.html", message="Tehtävän ottaminen ei onnistunut")
 
@@ -62,7 +78,8 @@ def new():
 def send():
     taskname = request.form["taskname"]
     content = request.form["content"]
-    if tasks.send(taskname, content):
+    work_time = request.form["work_time"]
+    if tasks.send(taskname, content, work_time):
         return redirect("/")
     else:
         return render_template("error.html", message="Tehtävän lähetys ei onnistunut")
@@ -92,12 +109,20 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        admin = request.form["admin"]
+        name = request.form["name"]
+        age = request.form["age"]
+        motto = request.form["motto"]
+        content = request.form["content"]
         if password1 != password2:
             return render_template("error.html", message="Salasanat eroavat")
-        if users.register(username, password1):
+        if users.register(username, password1, admin):
+            user_id = users.user_id()
+            profiles.create(user_id, name, age, motto, content)
             return redirect("/")
         else:
             return render_template("error.html", message="Rekisteröinti ei onnistunut")
+
 
 @app.route("/newteam", methods=["GET", "POST"])
 def newteam():
@@ -127,16 +152,27 @@ def jointeam(id):
     else:
         return render_template("error.html", message="Tiimin liittyminen ei onnistunut")
 
-@app.route("/profile", methods=["GET", "POST"])
-def profile():
-    if request.method == "GET":
-        return render_template("profile.html")
-    if request.method == "POST":
-        name = request.form["name"]
-        age = request.form["age"]
-        motto = request.form["motto"]
-        content = request.form["content"]
-        if profiles.modify(name, age, motto, content):
-            return redirect("/")
-        else:
-            return render_template("error.html", message="Profiilin päivittäminen ei onnistunut")
+@app.route("/profile/<int:id>", methods=["GET", "POST"])
+def profile(id):
+    name = profiles.get_name(id)
+    age = profiles.get_age(id)
+    motto = profiles.get_motto(id)
+    content = profiles.get_content(id)
+    updated = profiles.get_updated(id)
+    return render_template("profile.html", id=id, name=name, age=age, motto=motto, content=content, updated=updated)
+
+@app.route("/update_profile/<int:id>", methods=["POST"])
+def update_profile(id):
+    return render_template("update_profile.html", id=id) 
+
+@app.route("/send_update_profile/<int:id>", methods=["POST"])
+def send_update_profile(id):
+    name = request.form["name"]
+    age = request.form["age"]
+    motto = request.form["motto"]
+    content = request.form["content"]
+    if profiles.update_profile(id, name, age, motto, content):
+        updated = profiles.get_updated(id)
+        return render_template("profile.html", id=id, name=name, age=age, motto=motto, content=content, updated=updated)
+    else:
+        return render_template("error.html", message="Profiilin päivitys ei onnistunut")
