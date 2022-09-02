@@ -46,7 +46,7 @@ CREATE TABLE direct_message (
 
 CREATE TABLE user_info (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users,
+    user_id INTEGER REFERENCES users UNIQUE,
     name TEXT,
     age INTEGER,
     motto TEXT,
