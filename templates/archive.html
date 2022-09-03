@@ -1,0 +1,24 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+
+<title>Voluntary app</title>
+Tehtävien määrä: {{ count }}
+<hr>
+{% for task in tasks %}
+<p>
+{{ task.time }}<a>    ||    luonut:  </a>{{ task.username }}
+<p>
+<a href="/task/{{ task.id }}"><i>Tehtävä:</i> {{task.taskname}}</a>
+<p>
+<i>Status:</i> {{ task.task_state }}
+<hr>
+{% endfor %}
+
+{% endblock %}
+
+
