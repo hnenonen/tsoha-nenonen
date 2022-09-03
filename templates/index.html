@@ -7,7 +7,8 @@
 {% block content %}
 
 <title>Voluntary app</title>
-Tehtävien määrä: {{ count }} 
+
+Avoimien tehtävien määrä: {{ count_todo }}     || Käynnissä olevien tehtävien määrä: {{ count_working }} 
 <hr>
 {% for task in tasks %}
 <p>

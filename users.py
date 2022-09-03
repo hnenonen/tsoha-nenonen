@@ -36,3 +36,20 @@ def get_username(id):
 
 def user_id():
     return session.get("user_id",0)
+
+def get_list(user_id):
+    sql = "SELECT DISTINCT UI.name, TI.teamname, T.user_id FROM teams T, user_info UI, team_info TI WHERE TI.id = T.team_id AND UI.user_id = T.user_id AND T.team_id IN (SELECT T.team_id FROM teams T WHERE T.user_id=:user_id) ORDER BY TI.teamname"
+    #sql = "SELECT UI.name, TI.teamname FROM teams T, user_info UI, team_info TI WHERE T.user_id = UI.user_id AND T.team_id = TI.id;"
+    #sql = "SELECT UI.name, T.team_id FROM teams T, user_info UI WHERE T.user_id = UI.user_id";
+    #sql = "SELECT TI.teamname, UI.name FROM teams T, team_info TI, user_info UI WHERE T.user_id = UI.user_id AND T.team_id = TI.id"
+    #sql = "SELECT T.team_id FROM teams T WHERE T.user_id = user_id"
+    #sql = "SELECT T.user_id FROM teams T WHERE T.team_id = (SELECT T.team_id FROM teams T WHERE T.user_id = user_id)"
+    #sql = "SELECT UI.name, TI.teamname FROM 
+    #sql = "SELECT UI.name, TI.teamname FROM user_info UI, team_info TI, teams T WHERE UI.user_id=:user_id AND T.user_id=:user_id AND T.team_id = TI.id"
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchall()
+
+def count_all():
+    sql = "SELECT COUNT(*) FROM users"
+    result = db.session.execute(sql)
+    return result.fetchone()[0]

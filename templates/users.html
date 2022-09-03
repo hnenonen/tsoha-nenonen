@@ -1,0 +1,26 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+
+<title>Voluntary app</title>
+<p>
+Seuraavat henkilöt ovat samoissa ryhmissä kanssasi:
+<hr>
+{% for user in users %}
+<p>
+<a href="/profile/{{ user.user_id }}"><i>{{ user.name }}<a>    ||      </a>{{ user.teamname }}</a>
+<p>
+<hr>
+{% endfor %}
+<p>
+Käyttäjien määrä samoissa ryhmissä kanssasi: {{ count }}
+<p>
+Käyttäjien määrä koko palvelussa: {{ count_all }}
+{% endblock %}
+
+
+
