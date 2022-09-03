@@ -22,9 +22,19 @@ def get_worktime(id):
     return result.fetchone()[0]
 
 def get_list():
-    sql = "SELECT T.id, T.taskname, T.task_state, T.content, T.time, T.worker_id, T.work_time, U.username FROM tasks T, users U WHERE T.user_id = U.id ORDER BY T.id DESC"
+    sql = "SELECT T.id, T.taskname, T.task_state, T.content, T.time, T.worker_id, T.work_time, U.username FROM tasks T, users U WHERE T.user_id = U.id AND T.task_state!='DONE' ORDER BY T.id DESC"
     result = db.session.execute(sql)
     return result.fetchall()
+
+def get_archive():
+    sql = "SELECT T.id, T.taskname, T.task_state, T.content, T.time, T.worker_id, T.work_time, U.username FROM tasks T, users U WHERE T.user_id = U.id AND T.task_state='DONE' ORDER BY T.id DESC"
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def get_task_count(task_state):
+    sql = "SELECT COUNT(*) FROM tasks T WHERE T.task_state=:task_state"
+    result = db.session.execute(sql, {"task_state":task_state})
+    return result.fetchone()[0]
 
 def send(taskname, content, work_time):
     task_state = "TODO"
@@ -42,7 +52,7 @@ def update_task(id, taskname, content, task_state, work_time):
     user_id = users.user_id()
     if user_id == 0:
         return False
-    sql = "UPDATE tasks SET taskname=:taskname, content=:content, task_state=:task_state, user_id=:user_id, time=NOW(), work_time WHERE id=:id"
+    sql = "UPDATE tasks SET taskname=:taskname, content=:content, task_state=:task_state, user_id=:user_id, time=NOW(), work_time=:work_time WHERE id=:id"
     result = db.session.execute(sql, {"taskname":taskname, "content":content, "task_state": task_state, "user_id":user_id, "id":id, "work_time":work_time})
     db.session.commit()
     return True

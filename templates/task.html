@@ -7,9 +7,11 @@
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 
+{% if status != 'DONE' %}
 <form action="/update_task/{{ id }}" method="POST">
 <input type="submit" value="Muokkaa tehtävää">
 </form>
+{% endif %}
 
 <hr>
 Tehtävä:    {{ topic }}
@@ -20,10 +22,11 @@ Tehtävänanto:
 {{ content }}
 <p>
 <p>
+{% if status != 'DONE' %}
 <form action="/update/{{ id }}" method="POST">
 <input type="submit" value={{ message }}>
 </form>
-
+{% endif %}
 </hr>
 
 {% for comment in comments %}

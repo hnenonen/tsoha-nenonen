@@ -1,3 +1,4 @@
+from asyncio import format_helpers
 from db import db
 from app import app
 from flask import render_template, request, redirect
@@ -7,7 +8,15 @@ import users, tasks, teams_info, comments, profiles
 def index():
     task_list = tasks.get_list()
     user_id = users.user_id()
-    return render_template("index.html", count=len(task_list), tasks=task_list, user_id=user_id)
+    count_todo = tasks.get_task_count('TODO')
+    count_working = tasks.get_task_count('WORKING')
+    return render_template("index.html", count_todo=count_todo, count_working=count_working, tasks=task_list, user_id=user_id)
+
+@app.route("/archive")
+def archive():
+    task_list = tasks.get_archive()
+    user_id = users.user_id()
+    return render_template("archive.html", count=len(task_list), tasks=task_list, user_id=user_id)
 
 @app.route("/comment/<int:id>", methods=["POST"])
 def comment(id):
@@ -163,7 +172,11 @@ def profile(id):
 
 @app.route("/update_profile/<int:id>", methods=["POST"])
 def update_profile(id):
-    return render_template("update_profile.html", id=id) 
+    user_id = users.user_id()
+    show = False
+    if id == user_id:
+        show = True
+    return render_template("update_profile.html", id=id, show=show) 
 
 @app.route("/send_update_profile/<int:id>", methods=["POST"])
 def send_update_profile(id):
@@ -176,3 +189,10 @@ def send_update_profile(id):
         return render_template("profile.html", id=id, name=name, age=age, motto=motto, content=content, updated=updated)
     else:
         return render_template("error.html", message="Profiilin päivitys ei onnistunut")
+
+@app.route("/userlist")
+def userlist():
+    user_id = users.user_id()
+    user_list = users.get_list(user_id)
+    count_all = users.count_all()
+    return render_template("users.html", count=len(user_list), users=user_list, count_all=count_all)
