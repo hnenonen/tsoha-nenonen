@@ -17,6 +17,7 @@ Työmäärä tunneissa: <br>
 <textarea name="work_time" rows="1" cols="10"></textarea>
 <br>
 <input type="submit" value="Lähetä">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
 {% endblock %}

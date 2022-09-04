@@ -1,7 +1,7 @@
 from asyncio import format_helpers
 from db import db
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session, abort
 import users, tasks, teams_info, comments, profiles
 
 @app.route("/")
@@ -20,6 +20,7 @@ def archive():
 
 @app.route("/comment/<int:id>", methods=["POST"])
 def comment(id):
+    if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     comment = request.form["comment"]
     if comments.comment(id, comment):
         topic = tasks.get_task(id)
@@ -40,9 +41,7 @@ def task(id):
     status = tasks.get_status(id)
     comment_list = comments.get_list(id)
     work_time = tasks.get_worktime(id)
-    message = ""
-    if status == "TODO":
-        message = "Take_task"
+    message = "Take task"
     if status == "WORKING":
         message = "Mark_done"
     return render_template("task.html", id=id, topic=topic, status=status, message=message, comments=comment_list, work_time=work_time)
@@ -85,6 +84,7 @@ def new():
 
 @app.route("/send", methods=["POST"])
 def send():
+    if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     taskname = request.form["taskname"]
     content = request.form["content"]
     work_time = request.form["work_time"]
