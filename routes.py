@@ -52,6 +52,7 @@ def update_task(id):
 
 @app.route("/send_update_task/<int:id>", methods=["POST"])
 def send_update_task(id):
+    if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     taskname = request.form["taskname"]
     content = request.form["content"]
     task_state = request.form["task_state"]
@@ -174,7 +175,6 @@ def profile(id):
 
 @app.route("/update_profile/<int:id>", methods=["POST"])
 def update_profile(id):
-    if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     user_id = users.user_id()
     show = False
     if id == user_id:

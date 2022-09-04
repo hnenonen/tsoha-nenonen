@@ -25,6 +25,7 @@ Tehtävänanto:
 {% if status != 'DONE' %}
 <form action="/update/{{ id }}" method="POST">
 <input type="submit" value={{ message }}>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endif %}
 </hr>
