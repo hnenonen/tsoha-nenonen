@@ -37,7 +37,7 @@ def get_total_tasks_done(user_id):
     return result.fetchone()[0]  
 
 def get_tasks_in_same_teams(user_id):
-    sql = "SELECT DISTINCT TA.id, TA.taskname, TA.task_state, TA.content, TA.time, TA.worker_id, TA.work_time FROM tasks TA, users U WHERE TA.user_id IN (SELECT DISTINCT T.user_id FROM teams T WHERE T.team_id IN (SELECT T.team_id FROM teams T WHERE T.user_id=:user_id)) AND TA.task_state!='DONE' AND TA.user_id = U.id;" 
+    sql = "SELECT DISTINCT TA.id, TA.taskname, TA.task_state, TA.content, TA.time, TA.worker_id, TA.work_time, U.username FROM tasks TA, users U WHERE TA.user_id IN (SELECT DISTINCT T.user_id FROM teams T WHERE T.team_id IN (SELECT T.team_id FROM teams T WHERE T.user_id=:user_id)) AND TA.task_state!='DONE' AND TA.user_id = U.id;" 
     result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchall()
 
