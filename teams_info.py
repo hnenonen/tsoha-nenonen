@@ -45,14 +45,3 @@ def join_team(team_id):
     result = db.session.execute(sql, {"user_id":user_id, "team_id":team_id})
     db.session.commit() 
     return True
-
-#    user = result.fetchone()
-#    if not user:
-#        return False
-#    else:
-#        if  check_password_hash(user.password, password):
-#            session["user_id"] = user.id
-#            return True
-#        else:
-#            return False
-#
