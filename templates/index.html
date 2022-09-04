@@ -8,7 +8,16 @@
 
 <title>Voluntary app</title>
 
-Avoimien tehtävien määrä: {{ count_todo }}     || Käynnissä olevien tehtävien määrä: {{ count_working }} 
+Avoimien tehtävien määrä ryhmissäsi: {{ count_todo }}     || Käynnissä olevien tehtävien määrä ryhmissäsi: {{ count_working }} 
+<p></p>
+Sinulla tehtäviä suoritettu: {{ tasks_done }}                    || Sinulla yhteensä tunteja käytetty tehtäviin: {{ work_done}}
+<p>
+Eniten tehtäviä on tehnyt {{ most_tasks_user }}, {{ most_tasks_count }} kpl
+<p></p>
+Eniten tunteja on tehnyt {{ most_hours_user }}, {{ most_hours_count }} hours
+<p>
+Uuteen tiimiin voit liittyä Teams sivulla
+<p>
 <hr>
 {% for task in tasks %}
 <p>

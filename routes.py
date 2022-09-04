@@ -6,11 +6,17 @@ import users, tasks, teams_info, comments, profiles
 
 @app.route("/")
 def index():
-    task_list = tasks.get_list()
     user_id = users.user_id()
+    task_list = tasks.get_tasks_in_same_teams(user_id)
+    work_done = tasks.get_total_worktime_done(user_id)
+    tasks_done = tasks.get_total_tasks_done(user_id)
     count_todo = tasks.get_task_count('TODO')
     count_working = tasks.get_task_count('WORKING')
-    return render_template("index.html", count_todo=count_todo, count_working=count_working, tasks=task_list, user_id=user_id)
+    most_hours_user = tasks.most_hours_done_user()
+    most_tasks_user = tasks.most_tasks_done_user()
+    most_hours_count = tasks.most_hours_done_count()
+    most_tasks_count = tasks.most_tasks_done_count()
+    return render_template("index.html", count_todo=count_todo, count_working=count_working, tasks=task_list, user_id=user_id, work_done=work_done, tasks_done=tasks_done, most_hours_user=most_hours_user, most_tasks_user=most_tasks_user, most_hours_count=most_hours_count, most_tasks_count=most_tasks_count)
 
 @app.route("/archive")
 def archive():
@@ -22,6 +28,8 @@ def archive():
 def comment(id):
     if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     comment = request.form["comment"]
+    if len(comment) == 0: return render_template("error.html", message="Syötteissä virhe")
+
     if comments.comment(id, comment):
         topic = tasks.get_task(id)
         comment_list = comments.get_list(id)
@@ -57,6 +65,11 @@ def send_update_task(id):
     content = request.form["content"]
     task_state = request.form["task_state"]
     work_time = request.form["work_time"]
+
+    if len(taskname) == 0: return render_template("error.html", message="Syötteissä virhe")
+    if len(content) == 0: return render_template("error.html", message="Syötteissä virhe")
+    if len(work_time) == 0: return render_template("error.html", message="Syötteissä virhe")
+
     if tasks.update_task(id, taskname, content, task_state, work_time):
         return redirect("/")
     else:
@@ -90,6 +103,11 @@ def send():
     taskname = request.form["taskname"]
     content = request.form["content"]
     work_time = request.form["work_time"]
+
+    if len(taskname) == 0: return render_template("error.html", message="Syötteissä virhe")
+    if len(content) == 0: return render_template("error.html", message="Syötteissä virhe")
+    if len(work_time) == 0: return render_template("error.html", message="Syötteissä virhe")
+
     if tasks.send(taskname, content, work_time):
         return redirect("/")
     else:
@@ -125,6 +143,15 @@ def register():
         age = request.form["age"]
         motto = request.form["motto"]
         content = request.form["content"]
+
+        if len(username) == 0: return render_template("error.html", message="Syötteissä virhe")
+        if len(password1) == 0: return render_template("error.html", message="Syötteissä virhe")
+        if len(name) == 0: return render_template("error.html", message="Syötteissä virhe")
+        if len(age) == 0: return render_template("error.html", message="Syötteissä virhe")
+        if len(motto) == 0: return render_template("error.html", message="Syötteissä virhe")
+        if len(content) == 0: return render_template("error.html", message="Syötteissä virhe")
+
+
         if password1 != password2:
             return render_template("error.html", message="Salasanat eroavat")
         if users.register(username, password1, admin):
@@ -144,6 +171,10 @@ def newteam():
         teamname = request.form["teamname"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+
+        if len(teamname) == 0: return render_template("error.html", message="Syötteissä virhe")
+        if len(password1) == 0: return render_template("error.html", message="Syötteissä virhe")
+
         if password1 != password2:
             return render_template("error.html", message="Salasanat eroavat")
         if teams_info.register(teamname, password1):
@@ -187,6 +218,12 @@ def send_update_profile(id):
     age = request.form["age"]
     motto = request.form["motto"]
     content = request.form["content"]
+
+    if len(name) == 0: return render_template("error.html", message="Syötteissä virhe")
+    if len(age) == 0: return render_template("error.html", message="Syötteissä virhe")
+    if len(motto) == 0: return render_template("error.html", message="Syötteissä virhe")
+    if len(content) == 0: return render_template("error.html", message="Syötteissä virhe")
+
     if profiles.update_profile(id, name, age, motto, content):
         updated = profiles.get_updated(id)
         return render_template("profile.html", id=id, name=name, age=age, motto=motto, content=content, updated=updated)

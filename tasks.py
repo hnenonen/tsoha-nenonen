@@ -1,6 +1,46 @@
 from db import db
 import users
 
+def most_tasks_done(user_id):
+    sql = "SELECT U.username, COUNT(U.username) FROM tasks T, users U WHERE T.task_state='DONE' AND U.id=T.worker_id GROUP BY U.username"
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchone()[0] 
+
+def most_tasks_done_user():
+    sql = "SELECT U.username FROM tasks T, users U WHERE T.task_state='DONE' AND U.id=T.worker_id GROUP BY U.username"
+    result = db.session.execute(sql)
+    return result.fetchone()[0] 
+
+def most_hours_done_user():
+    sql = "SELECT U.username FROM tasks T, users U WHERE T.task_state='DONE' AND U.id=T.worker_id GROUP BY U.username"
+    result = db.session.execute(sql)
+    return result.fetchone()[0] 
+
+def most_tasks_done_count():
+    sql = "SELECT COUNT(U.username) AS count FROM tasks T, users U WHERE T.task_state='DONE' AND U.id=T.worker_id GROUP BY U.username"
+    result = db.session.execute(sql)
+    return result.fetchone()[0] 
+
+def most_hours_done_count():
+    sql = "SELECT SUM(T.work_time) AS hours FROM tasks T, users U WHERE T.task_state='DONE' AND U.id=T.worker_id GROUP BY U.username"
+    result = db.session.execute(sql)
+    return result.fetchone()[0] 
+
+def get_total_worktime_done(user_id):
+    sql = "SELECT SUM(work_time) FROM tasks WHERE user_id=:user_id AND task_state='DONE'"
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchone()[0]  
+
+def get_total_tasks_done(user_id):
+    sql = "SELECT COUNT(*) FROM tasks WHERE user_id=:user_id AND task_state='DONE'"
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchone()[0]  
+
+def get_tasks_in_same_teams(user_id):
+    sql = "SELECT DISTINCT TA.id, TA.taskname, TA.task_state, TA.content, TA.time, TA.worker_id, TA.work_time FROM tasks TA, users U WHERE TA.user_id IN (SELECT DISTINCT T.user_id FROM teams T WHERE T.team_id IN (SELECT T.team_id FROM teams T WHERE T.user_id=:user_id)) AND TA.task_state!='DONE' AND TA.user_id = U.id;" 
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchall()
+
 def get_task(id):
     sql = "SELECT taskname FROM tasks WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
@@ -21,9 +61,9 @@ def get_worktime(id):
     result = db.session.execute(sql, {"id":id})
     return result.fetchone()[0]
 
-def get_list():
+def get_list(user_id):
     sql = "SELECT T.id, T.taskname, T.task_state, T.content, T.time, T.worker_id, T.work_time, U.username FROM tasks T, users U WHERE T.user_id = U.id AND T.task_state!='DONE' ORDER BY T.id DESC"
-    result = db.session.execute(sql)
+    result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchall()
 
 def get_archive():
