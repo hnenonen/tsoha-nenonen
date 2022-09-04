@@ -12,11 +12,11 @@ def index():
     tasks_done = tasks.get_total_tasks_done(user_id)
     count_todo = tasks.get_task_count('TODO')
     count_working = tasks.get_task_count('WORKING')
-    most_hours_user = tasks.most_hours_done_user()
+    most_hours_user = tasks.most_hours_user()
+    most_hours_hours = tasks.most_hours_hours()
     most_tasks_user = tasks.most_tasks_done_user()
-    most_hours_count = tasks.most_hours_done_count()
     most_tasks_count = tasks.most_tasks_done_count()
-    return render_template("index.html", count_todo=count_todo, count_working=count_working, tasks=task_list, user_id=user_id, work_done=work_done, tasks_done=tasks_done, most_hours_user=most_hours_user, most_tasks_user=most_tasks_user, most_hours_count=most_hours_count, most_tasks_count=most_tasks_count)
+    return render_template("index.html", most_hours_hours=most_hours_hours, count_todo=count_todo, count_working=count_working, tasks=task_list, user_id=user_id, work_done=work_done, tasks_done=tasks_done, most_tasks_user=most_tasks_user, most_hours_user=most_hours_user, most_tasks_count=most_tasks_count)
 
 @app.route("/archive")
 def archive():

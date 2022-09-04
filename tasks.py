@@ -11,18 +11,18 @@ def most_tasks_done_user():
     result = db.session.execute(sql)
     return result.fetchone()[0] 
 
-def most_hours_done_user():
-    sql = "SELECT U.username FROM tasks T, users U WHERE T.task_state='DONE' AND U.id=T.worker_id GROUP BY U.username"
+def most_hours_user():
+    sql = "SELECT U.username FROM users U, tasks T WHERE U.id=T.worker_id AND T.task_state='DONE' GROUP BY U.username ORDER BY SUM(T.work_time) DESC LIMIT 1"
     result = db.session.execute(sql)
-    return result.fetchone()[0] 
+    return result.fetchone()
+
+def most_hours_hours():
+    sql = "SELECT SUM(T.work_time) FROM tasks T, users U WHERE username=(SELECT U.username FROM users U, tasks T WHERE U.id=T.worker_id AND T.task_state='DONE' GROUP BY U.username ORDER BY SUM(T.work_time) DESC LIMIT 1)"
+    result = db.session.execute(sql)
+    return result.fetchone()
 
 def most_tasks_done_count():
     sql = "SELECT COUNT(U.username) AS count FROM tasks T, users U WHERE T.task_state='DONE' AND U.id=T.worker_id GROUP BY U.username"
-    result = db.session.execute(sql)
-    return result.fetchone()[0] 
-
-def most_hours_done_count():
-    sql = "SELECT SUM(T.work_time) AS hours FROM tasks T, users U WHERE T.task_state='DONE' AND U.id=T.worker_id GROUP BY U.username"
     result = db.session.execute(sql)
     return result.fetchone()[0] 
 

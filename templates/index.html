@@ -14,8 +14,9 @@ Sinulla tehtäviä suoritettu: {{ tasks_done }}                    || Sinulla yh
 <p>
 Eniten tehtäviä on tehnyt {{ most_tasks_user }}, {{ most_tasks_count }} kpl
 <p></p>
-Eniten tunteja on tehnyt {{ most_hours_user }}, {{ most_hours_count }} hours
+Eniten tunteja on tehnyt {{ most_hours_user }}, {{ most_hours_hours }} tuntia
 <p>
+
 <a href="/teams">Uuteen tiimiin voit liittyä Teams sivulla</a>
 <p>
 <hr>
@@ -27,6 +28,7 @@ Eniten tunteja on tehnyt {{ most_hours_user }}, {{ most_hours_count }} hours
 <p>
 <i>Status:</i> {{ task.task_state }}
 <hr>
+
 {% endfor %}
 
 {% if session.user_id %}
