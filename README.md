@@ -4,6 +4,13 @@ Tsoha, course exercise, summer 2022
 heroku link: https://voluntee-app.herokuapp.com/
 
 STATUS 
+-- 04.9.2022
+ - CSRF weaknesses fixed
+ - Fixed Error when taking task that somebody else has already taken
+ - Added functions to calculate stuff from database
+ - Added more columns to tasks, etc. work_time
+ - Made profile page for users
+
 -- 21.8.2022
  - You can make a team and others can join it with correct password
  - You can take tasks, and change their status TODO->WORKING->DONE 
