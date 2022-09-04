@@ -17,10 +17,12 @@ Motto: <input type="text" name="motto">
 Sisältöä: <input type="text" name="content">
 <p>
 <input type="submit" value="Päivitä profiili">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
 <form action="/profile/{{ id }}" method="POST">
 <input type="submit" value="Peruuta">
+
 </form>
 
 {% endblock %}

@@ -64,6 +64,7 @@ def send_update_task(id):
 
 @app.route("/update/<int:id>", methods=["GET", "POST"])
 def update(id):
+    if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     if tasks.take_task(id):
         topic = tasks.get_task(id)
         status = tasks.get_status(id)
@@ -135,6 +136,7 @@ def register():
 
 @app.route("/newteam", methods=["GET", "POST"])
 def newteam():
+    if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     if request.method == "GET":
         return render_template("newteam.html")
     if request.method == "POST":
@@ -172,6 +174,7 @@ def profile(id):
 
 @app.route("/update_profile/<int:id>", methods=["POST"])
 def update_profile(id):
+    if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     user_id = users.user_id()
     show = False
     if id == user_id:

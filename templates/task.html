@@ -34,12 +34,13 @@ Tehtävänanto:
 <i>{{comment.time}}<a>    || </a>{{ comment.username }}<a>:    </a>{{ comment.comment }}</i>
 </hr>
 {% endfor %}
-
+<p></p>
 Kommentoi:
 <p>
 <form action="/comment/{{ id }}" method="POST">
 <input type="text" name="comment"></p>
 <input type="submit" value="Lähetä">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
 {% endblock %}

@@ -7,9 +7,9 @@
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 
-{% if show %}
+{% if session.user_id == id %}
 <form action="/update_profile/{{ id }}" method="POST">
-<input type="submit" value="Päivitä profiili">
+<input type="submit" value="Päivitä profiilia">
 </form>
 {% endif %}
 
