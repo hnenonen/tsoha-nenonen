@@ -4,6 +4,16 @@ Tsoha, course exercise, summer 2022
 heroku link: https://voluntee-app.herokuapp.com/
 
 STATUS 
+-- 04.9.2022
+ - CSRF weaknesses fixed
+ - Fixed Error when taking task that somebody else has already taken
+ - Added functions to calculate stuff from database
+ - Added more columns to tasks, etc. work_time
+ - Made profile page for users
+
+ ![](./static/database_sketch.png)
+
+
 -- 21.8.2022
  - You can make a team and others can join it with correct password
  - You can take tasks, and change their status TODO->WORKING->DONE 
@@ -15,10 +25,7 @@ STATUS
  - messages between two users
  - searches to bring more stats
  - currently mytasks is broken
- 
- 
- ![](./static/database_sketch.png)
-
+ - 
 -- 7.8.2022
  - It is possible to make an account 
  - You can login with the account
@@ -66,37 +73,6 @@ The admins can create todos and voluntees can pick ones suitable for them.
    - comments containing specific words
 
 ---------------------------------------------------------------------
-
-UI 
-
-Login page: 
-            - login with username and password --> list page 
-            - register --> register page --> login page
-
-Register page:
-            - give username, password x2, user/admin
-            - check no duplicate usernames, give error otherwise
-            - return to login page
-            
-list page: 
-            - list all todos, state: todo
-            - select a todo --> todo page
-            - filtering happens here
-            
-todo page:
-            - leave a message
-            - marked todo into different state: working/done
-            
-
----------------------------------------------------------------------
-
-Database tables:
-
-            - Admins
-            - Users
-            - TODOs --> this will be split up to manage searching/filtering
-            - Messages
-
 
 
 
