@@ -6,9 +6,9 @@
 {% block title %}Etusivu{% endblock %}
 {% block content %}
 
+Liity tiimiin klikkaamalla tiimin nimeä
 {% for team in teams %}
 <hr>
-Liity tiimiin klikkaamalla tiimin nimeä
 <a href="/jointeam/{{team.id}}"><i>{{team.teamname}}</i> 
 </hr>
 {% endfor %}

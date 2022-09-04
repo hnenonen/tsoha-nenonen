@@ -164,23 +164,13 @@ def register():
 
 @app.route("/newteam", methods=["GET", "POST"])
 def newteam():
-    if session["csrf_token"] != request.form["csrf_token"]:abort(403)
     if request.method == "GET":
         return render_template("newteam.html")
     if request.method == "POST":
         teamname = request.form["teamname"]
-        password1 = request.form["password1"]
-        password2 = request.form["password2"]
-
-        if len(teamname) == 0: return render_template("error.html", message="Syötteissä virhe")
-        if len(password1) == 0: return render_template("error.html", message="Syötteissä virhe")
-
-        if password1 != password2:
-            return render_template("error.html", message="Salasanat eroavat")
-        if teams_info.register(teamname, password1):
-            return redirect("/")
-        else:
-            return render_template("error.html", message="Uuden tiimin lisääminen ei onnistunut")
+        if teams_info.register(teamname):
+            teams = teams_info.get_list()
+            return render_template("teams.html", teams=teams)
 
 
 @app.route("/teams")

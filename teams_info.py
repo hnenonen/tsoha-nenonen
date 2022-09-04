@@ -3,27 +3,10 @@ from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
 import users
 
-def login(username, password):
-    sql = "SELECT id, password FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":username})
-    user = result.fetchone()
-    if not user:
-        return False
-    else:
-        if  check_password_hash(user.password, password):
-            session["user_id"] = user.id
-            return True
-        else:
-            return False
-
-def logout():
-    del session["user_id"]
-
-def register(teamname, password):
-    hash_value = generate_password_hash(password)
+def register(teamname):
     try:
-        sql = "INSERT INTO team_info (teamname, password) VALUES (:teamname, :password)"
-        db.session.execute(sql, {"teamname":teamname, "password":hash_value})
+        sql = "INSERT INTO team_info (teamname) VALUES (:teamname)"
+        db.session.execute(sql, {"teamname":teamname})
         db.session.commit()
     except:
         return False
